@@ -30,19 +30,14 @@ this.setState((prevState) => {
   }
 
   render() {
-    let options = [];
-    for (const option in this.state) {
-      options.push(option);
-     }
-    const stateEl = this.state;
-    const availabilityOfReviws = stateEl.good > 0 || stateEl.neutral > 0 || stateEl.bad > 0;
+    const {good,neutral, bad} = this.state;
+   
     return (
     <Section title={'Plese leave your feedback'}>
-        <FeedbackOptions options={options} onLeaveFeedback={this.onLeaveFeedback} />
-        { availabilityOfReviws ?
-          <Statistics good={stateEl.good} neutral={stateEl.neutral} bad={stateEl.bad} total={this.onTotal()} positivePercentage={this.positivePercentage()} />
+        <FeedbackOptions options={Object.keys(this.state)} onLeaveFeedback={this.onLeaveFeedback} />
+        { this.onTotal() ?
+          <Statistics good={good} neutral={neutral} bad={bad} total={this.onTotal()} positivePercentage={this.positivePercentage()} />
           : <Notification message={"There is no feedback"}/>}
-          
       </Section>
   );
   }
